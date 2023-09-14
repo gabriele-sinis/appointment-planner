@@ -12,18 +12,34 @@ function App() {
 
   /* Implement functions to add data to contacts and appointments */
   const addContact = (name, phone, email) => {
-    setContacts(prev => [...prev, {name, phone, email}]);
-  }
+    // Create a new contact object
+    const newContact = {
+        name, 
+        phone, 
+        email,
+  };
+    // Add the new contact to the contacts array
+    setContacts([...contacts, newContact]);
+  };
 
-  const addAppointment = (title, contact, date, time) => {
-    setAppointments(prev => [...prev, {title, contact, date, time}]);
-  }
+    // Define callback function to add a new appointment 
+    const addAppointment = (title, contact, date, time) => {
+      // Create a new appointment object
+      const newAppointment = {
+        title,
+        contact,
+        date,
+        time,
+      };
+      // Add the new appointment to the appointments array
+      setAppointments([...appointments, newAppointment]);
+    };
 
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={ <Root/> }>
       <Route index element={ <Navigate to={ROUTES.CONTACTS} replace/> }/>
-      <Route path={ROUTES.CONTACTS} element={ <ContactsPage /> /* Add props to ContactsPage */ }/>
-      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage /> /* Add props to AppointmentsPage */ }/>
+      <Route path={ROUTES.CONTACTS} element={ <ContactsPage contacts={contacts} addContact={addContact} /> /* Add props to ContactsPage */ }/>
+      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage appointments={appointments} addAppointment={addAppointment} /> /* Add props to AppointmentsPage */ }/>
     </Route>
   ));
   
